@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,10 +17,10 @@ namespace WebApplication3
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        [Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
 
             // Session - middleware  -> 서비스에 등록함
             services.AddSession();
@@ -49,7 +45,7 @@ namespace WebApplication3
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseSession(); // Application에서 사용하겠다.
+            app.UseSession(); // Application에서 사용하겠다.   
             app.UseRouting();
 
             app.UseAuthorization();

@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using PagedList;
 using WebApplication3.DataContext;
 using WebApplication3.Models;
+
 
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -24,7 +23,8 @@ namespace WebApplication3.Controllers
 
 
         // GET: /<controller>/
-        public IActionResult Index()
+        [Obsolete]
+        public IActionResult Index(int page = 1)
         {
             if (HttpContext.Session.GetInt32("USER_LOGIN_KEY") == null)
             {
@@ -34,7 +34,8 @@ namespace WebApplication3.Controllers
             using (var db = new NoteDBContext())
             {
                 var list = db.Notes.ToList();
-                return View(list);
+                
+                return View(list.ToPagedList(page, 5));
             }
 
             return View();
@@ -127,12 +128,12 @@ namespace WebApplication3.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-
+            model.UserNo = Int32.Parse(HttpContext.Session.GetInt32("USER_LOGIN_KEY").ToString());
             using (var db = new NoteDBContext())
             {
-
-                var note = db.Notes.FirstOrDefault(n => n.NoteNo.Equals(model.NoteNo));
-                db.Entry(note).CurrentValues.SetValues(model);
+                
+                db.Entry(model).CurrentValues.SetValues(model);
+                db.Update(model);
                 db.SaveChanges();
                 return Redirect("Index");
             }

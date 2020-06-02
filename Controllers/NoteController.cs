@@ -23,7 +23,7 @@ namespace WebApplication3.Controllers
 
 
         // GET: /<controller>/
-        [Obsolete]
+        
         public IActionResult Index(int page = 1)
         {
             if (HttpContext.Session.GetInt32("USER_LOGIN_KEY") == null)
@@ -120,7 +120,7 @@ namespace WebApplication3.Controllers
 
             return View(noteNo);
         }
-        
+
         [HttpPost]
         public IActionResult Edit(Note model)
         {
@@ -141,7 +141,8 @@ namespace WebApplication3.Controllers
 
 
             return View(model);
-        }        /// <summary>
+        }
+        /// <summary>
         /// 게시물 삭제
         /// </summary>
         /// <returns></returns

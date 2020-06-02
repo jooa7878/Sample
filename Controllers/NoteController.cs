@@ -119,7 +119,7 @@ namespace WebApplication3.Controllers
 
             return View(noteNo);
         }
-
+        
         [HttpPost]
         public IActionResult Edit(Note model)
         {
@@ -127,12 +127,12 @@ namespace WebApplication3.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-
+            model.UserNo = Int32.Parse(HttpContext.Session.GetInt32("USER_LOGIN_KEY").ToString());
             using (var db = new NoteDBContext())
             {
-
-                var note = db.Notes.FirstOrDefault(n => n.NoteNo.Equals(model.NoteNo));
-                db.Entry(note).CurrentValues.SetValues(model);
+                
+                db.Entry(model).CurrentValues.SetValues(model);
+                db.Update(model);
                 db.SaveChanges();
                 return Redirect("Index");
             }
@@ -140,8 +140,7 @@ namespace WebApplication3.Controllers
 
 
             return View(model);
-        }
-        /// <summary>
+        }        /// <summary>
         /// 게시물 삭제
         /// </summary>
         /// <returns></returns

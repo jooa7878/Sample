@@ -33,7 +33,7 @@ namespace WebApplication3.Controllers
 
             using (var db = new NoteDBContext())
             {
-                var list = db.Notes.ToList();
+                var list = db.Notes.ToList().OrderByDescending(p=>p.NoteNo);
                 
                 return View(list.ToPagedList(page, 5));
             }

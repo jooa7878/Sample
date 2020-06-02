@@ -120,7 +120,7 @@ namespace WebApplication3.Controllers
 
             return View(noteNo);
         }
-
+        
         [HttpPost]
         public IActionResult Edit(Note model)
         {
@@ -141,8 +141,7 @@ namespace WebApplication3.Controllers
 
 
             return View(model);
-        }
-        /// <summary>
+        }        /// <summary>
         /// 게시물 삭제
         /// </summary>
         /// <returns></returns
